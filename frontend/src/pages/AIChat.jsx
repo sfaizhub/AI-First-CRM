@@ -86,11 +86,11 @@ function AIChat() {
 
 
       const res = await api.post(
-        "/agent/chat",
+        "/api/agent/chat",
         {
-          message: userText
+        message: userText
         }
-      );
+        );
 
 
 
