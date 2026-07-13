@@ -10,7 +10,9 @@ from app.models.interaction import Interaction
 
 @tool
 def get_hcp_profile(hcp_id: int) -> str:
-    """Get a healthcare professional profile."""
+    """
+    Get a healthcare professional profile.
+    """
 
     db = SessionLocal()
 
@@ -39,8 +41,44 @@ def get_hcp_profile(hcp_id: int) -> str:
 
 
 @tool
+def list_hcps() -> str:
+    """
+    Get all healthcare professionals.
+    """
+
+    db = SessionLocal()
+
+    try:
+        hcps = db.scalars(
+            select(HCP)
+        ).all()
+
+        result = []
+
+        for hcp in hcps:
+            result.append({
+                "id": hcp.id,
+                "full_name": hcp.full_name,
+                "specialty": hcp.specialty,
+                "hospital": hcp.hospital,
+                "city": hcp.city,
+                "tier": hcp.tier,
+                "email": hcp.email,
+                "phone": hcp.phone
+            })
+
+        return json.dumps(result)
+
+    finally:
+        db.close()
+
+
+
+@tool
 def get_interaction_history(hcp_id: int) -> str:
-    """Get interaction history of an HCP."""
+    """
+    Get interaction history of an HCP.
+    """
 
     db = SessionLocal()
 
@@ -65,6 +103,7 @@ def get_interaction_history(hcp_id: int) -> str:
 
 
         history = []
+
 
         for item in interactions:
 
@@ -96,7 +135,9 @@ def get_interaction_history(hcp_id: int) -> str:
 
 @tool
 def suggest_next_best_action(hcp_id: int) -> str:
-    """Suggest next best sales action."""
+    """
+    Suggest next best sales action.
+    """
 
     return json.dumps({
         "hcp_id": hcp_id,
