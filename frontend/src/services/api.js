@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://ai-first-crm-cmfw.onrender.com",
+  baseURL: "https://ai-first-crm-cmfw.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
   },
